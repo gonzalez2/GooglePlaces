@@ -3,110 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale= 1.0, user-scalable=no">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBqS-0C9Vj4EsjdqpOmf2goXpg0q5BSZ9E"></script>
-    <script>
-    var map;
-    var infowindow;
-
-    var request;
-    var service;
-    var markers = [];
-
-//  Displays map
-      function initialize(){
-        var center = new google.maps.LatLng(34.0569172,-117.8239381);
-        map = new google.maps.Map(document.getElementById('map'),{
-          center: center,zoom:13
-        });
-
-        request = {
-          location: center,
-          radius: 8047,
-          types: ['atm']
-        };
-        infowindow = new google.maps.InfoWindow();
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(request, callback);
+    <link rel="stylesheet" href="styles.css?v=1.0">
 
 
-//User can search by region when they right click a section on the map. Radius is set to
-//5 miles to start and looks only for places containing atm for demostration.
+<!--    Google API-->
+<!--    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBqS-0C9Vj4EsjdqpOmf2goXpg0q5BSZ9E"></script>-->
+<!--    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqS-0C9Vj4EsjdqpOmf2goXpg0q5BSZ9E&libraries=places,drawing&callback=initMap" async defer></script>
 
-        google.maps.event.addListener(map, 'rightclick', function(event){
-          map.setCenter(event.latLng)
-          clearResults(markers)
-
-          var request = {
-            location: event.latLng,
-            radius:8047,
-            types:['atm']
-          };
-          service.nearbySearch(request, callback);
-
-        })
-
-//Autocomplete functionality
-        var ac = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
-        google.maps.event.addListener(ac, 'place_changed', function(){
-          var place = ac.getPlace();
-          console.log(place.formatted_address);
-          console.log(place.url);
-          console.log(place.geometry.location);
-        });
-      }
-
-//Displays results
-      function callback(results, status){
-        if(status == google.maps.places.PlacesServiceStatus.OK){
-          for(var i = 0; i < results.length; i++){
-            markers.push(createMarker(results[i]));
-          }
-        }
-      }
-
-//Create markers for results
-      function createMarker(place){
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          map:map,
-          position: place.geometry.location
-        });
-
-//Shows more info when marker is clicked
-        google.maps.event.addListener(marker, 'click', function(){
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-        });
-        return marker;
-      }
-
-//Clears markers when right click
-      function clear(markers){
-        for(var marks in markers){
-          markers[marks].setMap(null)
-        }
-        markers = []
-      }
-//Displays results when page is fully loaded
-      google.maps.event.addDomListener(window,'load',initialize);
-    </script>
-
-    <style>
-      html,body, #map{
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
-      }
-      #autocomplete{
-        width: 250px;
-        margin-top: 3px;
-        margin-bottom: 3px;
-        padding: 5px;
-      }
-
-    </style>
   </head>
   <body>
+    <script src="scripts.js"></script>
 <!--Search Bar-->
     <input id="autocomplete" class="controls" type="text" placeholder="Enter Place">
 <!--Container for Google Maps-->
@@ -114,3 +21,10 @@
   </body>
 
 </html>
+
+
+<!--AIzaSyBqS-0C9Vj4EsjdqpOmf2goXpg0q5BSZ9E-->
+
+
+
+
